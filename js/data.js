@@ -127,3 +127,40 @@ allList.forEach((item)=>{
 
 	
 })
+
+const filtroEl=document.querySelector("[name='filtro']");
+
+filtroEl.addEventListener("change",function(){
+	
+	let currentList=[];
+	
+	allList.map((item)=>{
+		if(item.type==="animal" && this.value==="animal"){
+			currentList.push(item);
+		}
+		else if(item.type==="user" && this.value==="user"){
+			currentList.push(item)
+		}
+		else if(item.type==="vegetable" && this.value==="vegetable"){
+			currentList.push(item)
+
+		}else if(this.value==="all"){
+			currentList=allList;
+		}
+		outputCardEl.innerHTML="";
+		currentList.forEach((item)=>{
+			outputCardEl.innerHTML+=`<div class="col">
+			<div class="card my-card">
+				<div class="${item.color}"><i class="fa-solid ${item.prefix+item.name}"></i></div>
+				<div class="card-text">${item.name.toUpperCase()}</div>
+			</div>
+		</div>`
+		
+		
+			
+		})
+	})
+
+	
+	
+})
