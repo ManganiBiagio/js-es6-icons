@@ -114,16 +114,23 @@ const allList=[
 ];
 
 const outputCardEl=document.querySelector(".output-card");
-
+const filtroEl=document.querySelector("[name='filtro']");
 
 listGenerator("all",allList);
 changeColor(allList);
+console.log(generateTypeList(allList));
+
+const typeList=generateTypeList(allList);
+typeList.forEach((item)=>{
+	filtroEl.innerHTML+=`<option value="${item}">${item}</option>
+	`
+})
 
 
 
 
 
-const filtroEl=document.querySelector("[name='filtro']");
+
 
 filtroEl.addEventListener("change",function(){
 	listGenerator(this.value,allList);
@@ -181,4 +188,17 @@ function changeColor(allList){
 	allList.forEach((item)=>{
 		item.color=colorGenerator();
 	})
+}
+
+function generateTypeList(allList){
+	const typeList=["all"];
+	allList.forEach((item)=>{
+		if(!typeList.includes(item.type)){
+			typeList.push(item.type)
+		}
+
+		
+	}
+	)
+	return typeList;
 }
