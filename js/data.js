@@ -109,58 +109,76 @@ const allList=[
 		prefix: 'fa-',
 		type: 'user',
 		family: 'fas',
-		color: 'blue'
+		color: 'blue' 
 	}
 ];
 
 const outputCardEl=document.querySelector(".output-card");
-console.log(outputCardEl);
-
-allList.forEach((item)=>{
-	outputCardEl.innerHTML+=`<div class="col">
-	<div class="card my-card">
-		<div class="${item.color}"><i class="fa-solid ${item.prefix+item.name}"></i></div>
-		<div class="card-text">${item.name.toUpperCase()}</div>
-	</div>
-</div>`
 
 
-	
-})
+listGenerator("all",allList);
+changeColor(allList);
+
+
+
+
 
 const filtroEl=document.querySelector("[name='filtro']");
 
 filtroEl.addEventListener("change",function(){
-	
+	listGenerator(this.value,allList);
+})
+
+function listGenerator(filtro,allList){
 	let currentList=[];
 	
-	allList.map((item)=>{
-		if(item.type==="animal" && this.value==="animal"){
+	allList.forEach((item)=>{
+		
+		if(item.type===filtro ){
 			currentList.push(item);
+			
 		}
-		else if(item.type==="user" && this.value==="user"){
-			currentList.push(item)
-		}
-		else if(item.type==="vegetable" && this.value==="vegetable"){
-			currentList.push(item)
+	else if(filtro==="all"){
+		currentList=allList;
+	}})
 
-		}else if(this.value==="all"){
-			currentList=allList;
-		}
 		outputCardEl.innerHTML="";
 		currentList.forEach((item)=>{
 			outputCardEl.innerHTML+=`<div class="col">
 			<div class="card my-card">
-				<div class="${item.color}"><i class="fa-solid ${item.prefix+item.name}"></i></div>
+				<div style="color:${item.color}"><i class="fa-solid ${item.prefix+item.name}"></i></div>
 				<div class="card-text">${item.name.toUpperCase()}</div>
 			</div>
 		</div>`
-		
-		
-			
-		})
-	})
 
-	
-	
+		
 })
+}
+
+
+function colorGenerator(){
+	return "#"+genExadeciaml();
+}
+function genExadeciaml(){
+	let exadecimalNum="";
+	const valori=["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"];
+	for(let i=0;i<6;i++){
+		exadecimalNum=exadecimalNum+valori[(randomNum(0,((valori.length)-1)))]
+
+		
+	}
+	
+	return exadecimalNum;
+
+}
+function randomNum(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) ) + min;
+	  }
+
+console.log(colorGenerator());
+
+function changeColor(allList){
+	allList.forEach((item)=>{
+		item.color=colorGenerator();
+	})
+}
